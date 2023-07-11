@@ -1,0 +1,14 @@
+To take a loan fill the following
+<%= form_with model: @loan, method: :post ,url: create_loan_path do|form| %>
+  <div class="form-outline mb-4" > 
+    <%= form.label :principal , class: "form-label"  %> 
+    <%= form.text_field :principal, class: "form-control"%>
+  </div>
+  <div class="form-outline mb-4">
+    <%= form.label :time, class: "form-lab el" %>
+    <%= form.text_field :time ,class: "form-control" %>
+  </div>
+    <div id = "user_button">
+    <%= form.submit "Apply",method: :create, id:"send", name:"Send_money" %><br>
+  </div>
+<%end%>

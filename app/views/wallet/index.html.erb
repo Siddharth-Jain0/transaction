@@ -1,0 +1,22 @@
+<% if user_signed_in? %> 
+  <% if current_user.role_user? %>
+   <div> Welcome <%= current_user.email %> </div> <br>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete ,class:"btn btn-primary"%><br> 
+    <%= link_to "Show balance",show_balance_path %><br>
+    <%= link_to "Show Loans",show_loan_path%><br>
+    <%= link_to "get a loan", new_loan_path%><br>
+    <%= link_to "set pin",set_pin_path %><br>
+  <%else%>
+  <h1>Admin Page</h1>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete ,class:"btn btn-primary"%><br> 
+    <%= link_to "Show balance",show_balance_path %><br>
+    <%= link_to "Show All Loans",loan_path%><br>
+
+  <%end%>
+<% else %>
+  <h1>Welcome to Transaction</h1>
+  <p>Please sign in to continue</p><br>
+  <%= button_to "Sign in", new_user_session_path ,class:"btn btn-primary" %> 
+<% end %>
+
+ 

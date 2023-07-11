@@ -1,0 +1,10 @@
+<% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+   <% end -%>
+<p> wallet id : <%= @wallet.id %><p>
+<p> wallet balance : <%= @wallet.balance %><p>
+<%= link_to "Send Money", send_money_path %><br>
+<%= link_to "request money", request_money_path %><br>
+<%= link_to "show request", show_request_path %><br>
+<%= link_to "show all transactions",show_transactions_path %>
+

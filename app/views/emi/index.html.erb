@@ -1,0 +1,40 @@
+
+  <table class="table table-striped" >
+    <thead class="thead-dark">
+      <tr>
+        <th>Month</th>
+        <th>Principal</th>
+        <th>Interest</th>
+        <th>Emi Amount</th>
+        <th>penalty</th>
+        <th>total amount</th>
+        <th>closing balance</th>
+        <th>status</th>
+        <th>Due Date</th>
+        <% if current_user.role_user? %>
+          <th>link to pay</th>
+        <%end%>
+
+      </tr>
+    </thead>
+      <% @emis.each do |emi|%>
+    <tbody>  
+        <tr>
+        <td><%= emi.month.round(2) %></td>
+        <td><%= emi.principal.round(2) %></td>
+        <td><%= emi.interest.round(2) %></td>
+        <td><%= emi.total_payment.round(2) %></td>
+        <td><%= emi.penalty%></td>
+        <td><%= (total_amount = emi.total_payment + emi.penalty).round(2) %>
+        <td><%= emi.closing_balance.round(2) %></td>
+        <td><%= emi.status %></td>
+        <td><%= emi.due_date %></td>
+        <td><% if current_user.role_user? %>
+          <% if emi.status_unpaid? %>
+            <%= link_to "pay",send_money_path(upi: User.find(14).upi , amount: total_amount,emi_id: emi.id) %>
+          <%end%>
+        <%end%></td>
+        </tr>   
+    </tbody>
+      <% end %>
+  </table>

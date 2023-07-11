@@ -1,0 +1,14 @@
+<%= turbo_stream.replace "user_info" do %>
+  <% if @user.present? %>
+  <% @wallet = Wallet.find(@user.id)%>
+    <div id= "user_info"><p id = "present">Reciever name: <%= @user.name %></p>        
+        <p>Reciever Bank Name: <%= @wallet.bank_name %></p>  
+        <script type="text/javascript">
+          document.getElementById('send').disabled = false
+        </script>
+    </div>
+  <% else %>
+    <div id= "user_info"><p>Please Enter Valid User Upi</p>
+    </div>
+  <%end%>
+<%end%>

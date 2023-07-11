@@ -1,0 +1,28 @@
+<% if @loans.present? %>
+  <table class="table table-striped" >
+    <thead class="thead-dark">
+      <tr>
+        <th>Loan Id</th>
+        <th>Principal</th>
+        <th>Monthly Rate</th>
+        <th>Time in no of months</th>
+        <th>EMI Amount</th>
+        <th>Status</th>        
+      </tr>
+    </thead>
+      <% loans.each do |loan|%>
+    <tbody>  
+        <tr>
+        <td><%=link_to loan.id,emi_index_path(loan.id) %></td>
+        <td><%= loan.principal %></td>
+        <td><%= loan.monthly_rate.round(4) %></td>
+        <td><%= loan.time %></td>
+        <td><%= loan.emi_amount %></td>
+        <td><%= loan.status %></td>
+        </tr>   
+    </tbody>
+      <% end %>
+  </table>
+<% else %>
+  <h1>No Loans Taken</h1>
+<% end %>

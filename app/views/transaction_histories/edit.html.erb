@@ -1,0 +1,22 @@
+<div class="card bg-light">
+<h1>Transaction</h1>
+<p>Enter following information to transfer money</p>
+<%= form_with model: [@transaction,User.find(@transaction.reciever_id)], data: { controller: "hello" }, method: :post ,url: update_path do|form| %>
+  <div class="form-outline mb-4" > 
+    <%= form.label :upi , class: "form-label"  %> 
+    <%= form.text_field :upi,  class: "form-control",  "data-hello-target": "upi",id: "upi"%>
+    <a data-action="click->hello#verify", name="verify", method= "get" font>Click to Verify</a>
+  </div>
+  <div id="user_info" ></div>
+  </div>
+  <div class="form-outline mb-4">
+    <%= form.label :amount, class: "form-lab el" %>
+    <%= form.text_field :amount, value: @transaction.amount,class: "form-control" %>
+    <%= form.hidden_field :id, :value => @transaction.id %>
+  </div>
+    <div id = "user_button">
+    <%= form.submit "Send money",method: :create, id:"send", name:"Send_money", disabled: true
+    %><br>
+  </div>
+<%end%>
+</div>

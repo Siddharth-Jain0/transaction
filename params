@@ -1,0 +1,24 @@
+
+[1mFrom:[0m /home/dev15/Documents/work/transaction/app/controllers/transaction_histories_controller.rb:16 TransactionHistoriesController#create:
+
+     [1;34m8[0m: [32mdef[0m [1;34mcreate[0m
+     [1;34m9[0m:   @t = [1;34;4mTransactionHistory[0m.new(tra_params)
+    [1;34m10[0m:     [32mif[0m !params[[33m:transaction_history[0m][[33m:amount[0m].present? || !params[[33m:transaction_history[0m][[33m:upi[0m].present?
+    [1;34m11[0m:       flash[[33m:notice[0m] = [31m[1;31m"[0m[31mTransaction Failed .Enter Valid Credentials[1;31m"[0m[31m[0m
+    [1;34m12[0m:       redirect_to show_balance_path
+    [1;34m13[0m:     [32melse[0m
+    [1;34m14[0m:       @t.sender_id = current_user.id
+    [1;34m15[0m:       @t.reciever_id = [1;34;4mUser[0m.find_by([35mupi[0m: params[[33m:transaction_history[0m][[33m:upi[0m] ).id
+ => [1;34m16[0m:       binding.pry
+    [1;34m17[0m:       @t.status = [31m[1;31m"[0m[31mcompleted[1;31m"[0m[31m[0m
+    [1;34m18[0m:       @t.option = [31m[1;31m"[0m[31msend[1;31m"[0m[31m[0m
+    [1;34m19[0m:       @w1 =[1;34;4mWallet[0m.find(current_user.id)
+    [1;34m20[0m:       [32mif[0m @w1.balance < @t.amount 
+    [1;34m21[0m:         flash[[33m:notice[0m] = [31m[1;31m"[0m[31mTransaction Failed . Insufficient Balance[1;31m"[0m[31m[0m
+    [1;34m22[0m:         redirect_to show_balance_path
+    [1;34m23[0m:       [32melse[0m @t.save
+    [1;34m24[0m:         redirect_to root_path  
+    [1;34m25[0m:     [32mend[0m
+    [1;34m26[0m:   [32mend[0m
+    [1;34m27[0m: [32mend[0m
+

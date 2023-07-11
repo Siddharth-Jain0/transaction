@@ -1,0 +1,10 @@
+<h1>Set Pin</h1>
+<%= form_with model: @wallet ,method: :post,url: update_wallet_path do |form|%> 
+  <div class="form-outline mb-4" > 
+    <%= form.label :pin , class: "form-label"  %> 
+    <%= form.password_field :pin,  class: "form-control"%>
+  </div>
+  <div id = "user_button">
+    <%= form.submit "Set pin"%><br>
+  </div>
+<% end %>

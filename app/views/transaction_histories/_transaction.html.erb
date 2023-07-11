@@ -1,0 +1,28 @@
+<table class="table table-striped" >
+    <thead class="thead-dark">
+    <tr>
+      <th>Transaction Id</th>
+      <th>Sender Name</th>
+      <th>Reciever Name</th>
+      <th>Sender UPI</th>
+      <th>Reciever UPI</th>
+      <th>Amount</th>
+      <th>Option</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <% @transactions.each do |transaction| %> 
+    <tbody>  
+      <tr>
+        <td><%= transaction.id %></td>
+        <td><%= User.find(transaction.sender_id).name %></td>
+        <td><%= User.find(transaction.reciever_id).name  %></td>
+        <td><%= User.find(transaction.sender_id).upi  %></td>
+        <td><%= User.find(transaction.reciever_id).upi  %></td>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.option %></td>
+        <td><%= transaction.status %></td>
+      </tr>   
+    </tbody>
+  <% end %>
+</table>

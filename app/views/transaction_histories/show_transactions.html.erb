@@ -1,0 +1,19 @@
+Transaction History
+<div data-controller = "hello">
+  <select name="status" data-action= "change->hello#selectstatus" id= "status">
+      <option value= "none">All transactions</option>
+      <option value="completed">completed</option>
+      <option value= "pending"> pending </option>
+      <option value= "failed"> failed </option>
+  </select>
+</div>
+<div data-controller = "hello">
+  <label for="search">Search box:</label>
+  <input type="text" id="search" name="search" data-action= "input->hello#search" data-hello-target= "search"><br>
+</div>
+<turbo-frame id="transactions">
+  <%= render "transaction"%>
+</div>
+<%= will_paginate @transactions , inner_window: 2, outer_window: 2, previous_label: '&laquo; Pre', :next_label     => 'Nxt &raquo;', renderer: BootstrapPagination::Rails %>
+<turbo-frame>
+

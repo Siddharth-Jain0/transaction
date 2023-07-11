@@ -1,0 +1,2 @@
+module EmiHelper
+end
