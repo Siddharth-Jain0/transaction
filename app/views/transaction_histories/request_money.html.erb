@@ -10,11 +10,13 @@
   </div>
   <div class="form-outline mb-4">
     <%= form.label :amount, class: "form-lab el" %>
-    <%= form.text_field :amount, class: "form-control" %>
+    <%= form.text_field :amount, class: "form-control" , value: nil %>
+    <% @transaction.errors.full_messages_for(:amount).each do |message| %>
+      <%= message %><br>
+    <% end %>
   </div>
     <div id = "user_button">
-    <%= form.submit "Request money", id:"send", disable: false
- %><br>
+    <%= form.submit "Request money", id:"send", disabled: true %><br>
   </div>
 <%end%>
 </div>

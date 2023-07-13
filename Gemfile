@@ -21,7 +21,7 @@ gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 gem "will_paginate"
-gem 'will_paginate-bootstrap'
+gem "will_paginate-bootstrap"
 gem 'kaminari'
 gem "paranoia"
 

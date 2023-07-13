@@ -12,17 +12,21 @@
   <div class="form-outline mb-4">
     <%= form.label :amount, class: "form-lab el" %>
     <%= form.text_field :amount, class: "form-control" ,value: params[:amount]%>
+    
+    <% @transaction.errors.full_messages_for(:amount).each do |message| %>
+      <%= message %><br>
+    <% end %>
   </div>
   <div>
     <%= form.label :pin, class: "form-lab el" %> 
     <%= form.password_field :pin,class: "form-control" %>
+    
   </div>
   <%= form.hidden_field :loan_id ,value: params[:loan_id]%>
   <%= form.hidden_field :emi_id ,value: params[:emi_id]%>
 
     <div id = "user_button">
-    <%= form.submit "Send money",method: :create, id:"send", name:"Send_money", disabled: true
-    %><br>
+    <%= form.submit "Send money",method: :create, id:"send", name:"Send_money", disabled: true %><br>
   </div>
 <%end%>
 </div>

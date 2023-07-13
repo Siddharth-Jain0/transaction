@@ -1,16 +1,11 @@
 <h1>Requests</h1>
-<% flash.each do |type, msg| %>
-  <div class="alert alert-info">
-    <%= msg %>
-  </div>
-<% end %>
 <ul>
   <% @transactions.each do |request| %>
     <li>
       Reciever name :<%= User.find(request.reciever_id).name %><br>
       Amount : <%= request.amount %> <br>
       <%= link_to "Send Money",edit_path(transaction_id: request.id) %><br>
-      <%= link_to "Cancel",cancel_path(request.id) %><br>
+      <%= link_to "Cancel",cancel_path(transaction_id: request.id) %><br>
     </li>
   <% end %>
 </ul>

@@ -14,6 +14,6 @@ Transaction History
 <turbo-frame id="transactions">
   <%= render "transaction"%>
 </div>
-<%= will_paginate @transactions , inner_window: 2, outer_window: 2, previous_label: '&laquo; Pre', :next_label     => 'Nxt &raquo;', renderer: BootstrapPagination::Rails %>
+<%= will_paginate @transactions , inner_window: 2, outer_window: 2, previous_label: '&laquo; Pre', :next_label=> 'Nxt &raquo;', renderer: BootstrapPagination::Rails %>
 <turbo-frame>
 

@@ -12,17 +12,22 @@ class LoanController < ApplicationController
   end
 
   def create
-    @loan = Loan.new(loan_params)
-    @loan.user_id = current_user.id
-    @loan.monthly_rate = (10.0/12.0)/100.0
-    @loan.time *= 12
-    @loan.status = "pending"
-    @loan.emi_amount =(@loan.principal*@loan.monthly_rate*((1 + @loan.monthly_rate)**@loan.time))/(((1+@loan.monthly_rate)**@loan.time)-1)
-    if @loan.save
-      flash[:notice] = "Applied for Loan"
-      redirect_to show_loan_path
-    else
+      @loan = Loan.new(loan_params)
+    if !params[:loan][:principal].present? || !params[:loan][:time].present?
+      flash[:notice] = "Enter Valid Data"
       render :new,status: :unprocessable_entity
+    else
+      @loan.user_id = current_user.id
+      @loan.monthly_rate = (10.0/12.0)/100.0
+      @loan.time *= 12
+      @loan.status = "pending"
+      @loan.emi_amount =(@loan.principal*@loan.monthly_rate*((1 + @loan.monthly_rate)**@loan.time))/(((1+@loan.monthly_rate)**@loan.time)-1)
+      if @loan.save
+        flash[:notice] = "Applied for Loan"
+        redirect_to show_loan_path
+      else
+        render :new,status: :unprocessable_entity
+      end
     end
   end
 

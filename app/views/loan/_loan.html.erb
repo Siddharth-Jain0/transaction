@@ -7,11 +7,16 @@
         <th>Monthly Rate</th>
         <th>Time in no of months</th>
         <th>EMI Amount</th>
-        <th>Status</th>        
+        <th>Status</th> 
+        <% if current_user.role_admin? %>
+          <th>User Id</th>
+          <th>Grant loan</th> 
+        <%end%>
+   
       </tr>
     </thead>
-      <% loans.each do |loan|%>
     <tbody>  
+      <% @loans.each do |loan|%>
         <tr>
         <td><%=link_to loan.id,emi_index_path(loan.id) %></td>
         <td><%= loan.principal %></td>
@@ -19,10 +24,17 @@
         <td><%= loan.time %></td>
         <td><%= loan.emi_amount %></td>
         <td><%= loan.status %></td>
+      <% if current_user.role_admin? %>
+        <td><%= loan.user_id %></td>
+        <td><% if loan.status == "pending" %>
+          <%= link_to "grant loan", send_money_path(upi: User.find(loan.user_id).upi , amount: loan.principal , loan_id:loan.id)%>
+        <%end%>
+      <%end%>
+    </td>
         </tr>   
     </tbody>
       <% end %>
   </table>
 <% else %>
-  <h1>No Loans Taken</h1>
+  <h1>No Loans</h1>
 <% end %>

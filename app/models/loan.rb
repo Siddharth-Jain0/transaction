@@ -1,8 +1,8 @@
 class Loan < ApplicationRecord
     belongs_to :user
     has_many :emis
-    validates :principal,presence: true
-    validates :time,presence: true    
+    validates :principal,presence: true,numericality: {greater_than: 0 , message: "should be no. greater than 0"}
+    validates :time,presence: true,numericality: {greater_than: 0 , message: "should be a no. greater than 0"}
     after_update :create_emi
     def create_emi
       loan = self

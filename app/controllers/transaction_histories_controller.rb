@@ -3,13 +3,13 @@ class TransactionHistoriesController < ApplicationController
   def send_money
     @wallet = Wallet.find_by(user_id: current_user.id)
     @transaction = TransactionHistory.new   
-  end
+  end 
    
   def create
     @transaction = TransactionHistory.new(tra_params)
-    if !params[:transaction_history][:amount].present? || !params[:transaction_history][:upi].present?
+    if !params[:transaction_history][:amount].present? || !params[:transaction_history][:upi].present? || !User.find_by(upi: params[:transaction_history][:upi] ).present?
       flash[:notice] = "Transaction Failed .Enter Valid Credentials"
-      redirect_to show_balance_path
+      redirect_to send_money_path
     else
       @transaction.sender_id = current_user.id
       @transaction.reciever_id = User.find_by(upi: params[:transaction_history][:upi] ).id
@@ -20,7 +20,7 @@ class TransactionHistoriesController < ApplicationController
         if @wallet1.balance < @transaction.amount 
           flash[:notice] = "Transaction Failed . Insufficient Balance"
           redirect_to show_balance_path
-        else @transaction.save
+        elsif @transaction.save
           flash[:notice] = "Transaction Successful"
           if params[:transaction_history][:loan_id].present?
             @loan = Loan.find(params[:transaction_history][:loan_id])
@@ -34,11 +34,14 @@ class TransactionHistoriesController < ApplicationController
             @emi.save
             flash[:notice] = "Emi paid Successfully"      
           end
-          redirect_to root_path  
+          redirect_to root_path 
+        else
+          flash[:notice] = "Transaction Failed .Enter Valid Credentials"
+          redirect_to send_money_path
         end
       else
         flash[:notice] = "Incorrect Pin.Transaction Failed"
-        redirect_to show_balance_path          
+        redirect_to send_money_path          
       end
     end
   end
@@ -56,7 +59,7 @@ class TransactionHistoriesController < ApplicationController
     @transaction = TransactionHistory.new(tra_params)
     if !params[:transaction_history][:amount].present? || !params[:transaction_history][:upi].present?
       flash[:notice] = "Transaction Failed .Enter Valid Credentials"
-      redirect_to show_balance_path
+      render request_money_path
     else
       @transaction.reciever_id = current_user.id
       @transaction.sender_id = User.find_by(upi: params[:transaction_history][:upi] ).id
@@ -66,7 +69,7 @@ class TransactionHistoriesController < ApplicationController
         flash[:notice] = "Request send Successfully"
         redirect_to root_path  
       else
-        render :new, status: :unprocessable_entity
+        render :request_money, status: :unprocessable_entity
       end
     end
   end
@@ -76,7 +79,7 @@ class TransactionHistoriesController < ApplicationController
   end
 
   def cancel
-    @transaction = TransactionHistory.find(params[:format])
+    @transaction = TransactionHistory.find(params[:transaction_id])
     @transaction.update(status:"failed")
     flash[:notice] = "Transaction Canceled Successfully"
     redirect_to show_request_path

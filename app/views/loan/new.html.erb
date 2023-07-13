@@ -3,12 +3,18 @@ To take a loan fill the following
   <div class="form-outline mb-4" > 
     <%= form.label :principal , class: "form-label"  %> 
     <%= form.text_field :principal, class: "form-control"%>
+    <% @loan.errors.full_messages_for(:principal).each do |message| %>
+      <%= message %><br>
+    <% end %>
   </div>
   <div class="form-outline mb-4">
-    <%= form.label :time, class: "form-lab el" %>
+    <%= form.label :tenure, class: "form-lab el"%>
     <%= form.text_field :time ,class: "form-control" %>
+    <% @loan.errors.full_messages_for(:time).each do |message| %>
+      <%= message %><br>
+    <% end %>
   </div>
     <div id = "user_button">
     <%= form.submit "Apply",method: :create, id:"send", name:"Send_money" %><br>
   </div>
-<%end%>
+<%end%> 
