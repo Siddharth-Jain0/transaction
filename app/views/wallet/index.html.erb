@@ -1,20 +1,10 @@
 <% if user_signed_in? %> 
   <% if current_user.role_user? %>
-  <div class="intpol3" style="text-align: left; font-size: 17px; padding-top:10px; color: #003366">
-   <div> Welcome <%= current_user.email %> </div> <br>
-    <%= link_to "Show balance",show_balance_path %><br>
-    <%= link_to "Show Loans",show_loan_path%><br>
-    <%= link_to "get a loan", new_loan_path%><br>
-    <%= link_to "set pin",set_pin_path %><br>
+    <div> Welcome <%= current_user.email %> </div> <br>
   <%else%>
-  <h1>Admin Page</h1>
-    <%= link_to "Show balance",show_balance_path %><br>
-    <%= link_to "Show All Loans",loan_path%><br>
-  </div>
+    <h1>Admin Page</h1>
   <%end%>
-<% else %>
+<%else%>
   <h1>Welcome to Transaction</h1>
   <p>Please sign in to continue</p><br>
 <% end %>
-
- 
