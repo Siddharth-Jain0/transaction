@@ -24,7 +24,7 @@ gem "will_paginate"
 gem "will_paginate-bootstrap"
 gem 'kaminari'
 gem "paranoia"
-
+gem "redis"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 

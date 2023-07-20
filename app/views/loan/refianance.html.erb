@@ -1,0 +1,23 @@
+<h1>Refianance</h1>
+The total amount of emi left is <%=(@prepayment_amount).round(2) %> <br>
+Please Enter the Loan amount to Refianance
+<%= form_with model: @loan, method: :post ,url: apply_refianance_path do|form| %>
+  <div class="form-outline mb-4" > 
+    <%= form.label :principal , class: "form-label"  %> 
+    <%= form.text_field :principal, class: "form-control"%>
+    <% @loan.errors.full_messages_for(:principal).each do |message| %>
+      <%= message %><br>
+    <% end %>
+  </div>
+  <div class="form-outline mb-4">
+    <%= form.label :tenure, class: "form-lab el"%>
+    <%= form.text_field :time ,class: "form-control" %>
+    <% @loan.errors.full_messages_for(:time).each do |message| %>
+      <%= message %><br>
+    <% end %>
+    <%= form.hidden_field :previous_loan_id ,value: params[:previous_loan_id]%>
+  </div>
+    <div id = "user_button">
+    <%= form.submit "Apply",method: :create, id:"send", name:"Send_money" %><br>
+  </div>
+<%end%> 

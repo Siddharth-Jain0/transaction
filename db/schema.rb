@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_11_072459) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_18_123231) do
   create_table "emis", force: :cascade do |t|
     t.integer "loan_id"
     t.integer "month"
@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_11_072459) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "previous_loan_id"
     t.index ["user_id"], name: "index_loans_on_user_id"
   end
 

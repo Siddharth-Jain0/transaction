@@ -11,6 +11,8 @@
         <% if current_user.role_admin? %>
           <th>User Id</th>
           <th>Grant loan</th> 
+        <% elsif current_user.role_user? %> 
+          <th>Refianance loan</th>
         <%end%>
          
       </tr>
@@ -21,16 +23,27 @@
         <td><%=link_to loan.id,emi_index_path(loan.id) %></td>
         <td><%= loan.principal %></td>
         <td><%= loan.monthly_rate.round(4) %></td>
-        <td><%= loan.time %></td>
-        <td><%= loan.emi_amount %></td>
+        <td><%= loan.time.round(0) %></td>
+        <td><%= loan.emi_amount.round(2) %></td>
         <td><%= loan.status %></td>
       <% if current_user.role_admin? %>
         <td><%= loan.user_id %></td>
-        <td><% if loan.status == "pending" %>
+        <td>
+        <% if loan.status == "pending" %>
           <%= link_to "grant loan", send_money_path(upi: User.find(loan.user_id).upi , amount: loan.principal , loan_id:loan.id)%>
         <%end%>
+        </td>
+      <% elsif current_user.role_user? %> 
+        <%if !loan.previous_loan_id.present? && loan.status == "granted"%>
+          <%@emis = Emi.where(loan_id: loan.id) %>
+            <% @emis.each do |emi| %>
+              <% if emi.status_unpaid?%>
+                <td><%= link_to "refianance loan" , refianance_loan_path(previous_loan_id: loan.id) %></td>
+                <% break%>
+            <% end %>
+          <% end %>
+        <% end %>
       <%end%>
-    </td>
         </tr>   
     </tbody>
       <% end %>

@@ -31,7 +31,7 @@
         <td><%= emi.due_date %></td>
         <td><% if current_user.role_user? %>
           <% if emi.status_unpaid? %>
-            <%= link_to "pay",send_money_path(upi: User.find(16).upi , amount: total_amount,emi_id: emi.id) %>
+            <%= link_to "pay",send_money_path(upi: User.find(20).upi , amount: total_amount,emi_id: emi.id) %>
           <%end%>
         <%end%></td>
         </tr>   

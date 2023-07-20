@@ -1,4 +1,4 @@
-<table class="table table-striped" >
+<table class="table table-striped" id="myTable<%= current_user.id%>">
     <thead class="thead-dark">
     <tr>
       <th>Transaction Id</th>
@@ -11,18 +11,20 @@
       <th>Status</th>
     </tr>
   </thead>
-  <% @transactions.each do |transaction| %> 
-    <tbody>  
+  <tbody>
+<div id = "transaction2">  </div>
+    <% @transactions.each do |transaction| %> 
       <tr>
         <td><%= transaction.id %></td>
         <td><%= User.find(transaction.sender_id).name %></td>
         <td><%= User.find(transaction.reciever_id).name  %></td>
         <td><%= User.find(transaction.sender_id).upi  %></td>
         <td><%= User.find(transaction.reciever_id).upi  %></td>
-        <td><%= transaction.amount %></td>
+        <td><%= transaction.amount.round(2) %></td>
         <td><%= transaction.option %></td>
         <td><%= transaction.status %></td>
       </tr>   
-    </tbody>
-  <% end %>
+    <% end %>
+  </tbody>
 </table>
+ 

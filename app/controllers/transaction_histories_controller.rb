@@ -3,6 +3,14 @@ class TransactionHistoriesController < ApplicationController
   def send_money
     @wallet = Wallet.find_by(user_id: current_user.id)
     @transaction = TransactionHistory.new   
+    if params[:loan_id].present?
+      @loan = Loan.find(params[:loan_id])
+      if @loan.previous_loan_id.present?
+        @loan = Loan.find(@loan.previous_loan_id)
+        @emi = Emi.where(loan_id: @loan.id,Status: 1).last
+        params[:amount] = (params[:amount].to_i - @emi.closing_balance - @emi.closing_balance*0.02).round(2) 
+      end
+    end
   end 
    
   def create
@@ -21,9 +29,25 @@ class TransactionHistoriesController < ApplicationController
           flash[:notice] = "Transaction Failed . Insufficient Balance"
           redirect_to show_balance_path
         elsif @transaction.save
+          data = [@transaction,User.find(@transaction.sender_id),User.find(@transaction.reciever_id)]
+          ActionCable.server.broadcast("transaction_channel",data)
           flash[:notice] = "Transaction Successful"
           if params[:transaction_history][:loan_id].present?
             @loan = Loan.find(params[:transaction_history][:loan_id])
+            if @loan.previous_loan_id.present?
+              @emi = Emi.find_by(loan_id: @loan.previous_loan_id ,status: 0)
+              @emis = Emi.where(loan_id: @loan.previous_loan_id ,status: 0)
+              @emi1 = Emi.where(loan_id: @loan.previous_loan_id,Status: 1).last
+              @new_emi = @emi
+              @new_emi.total_payment = @emi1.closing_balance 
+              @new_emi.principal = @emi1.closing_balance
+              @new_emi.penalty = @emi1.closing_balance*0.02
+              @new_emi.interest = 0.0
+              @new_emi.closing_balance = 0.0
+              @new_emi.status = 1
+              @new_emi.save
+              @emis.destroy_all
+            end
             @loan.status = "granted"
             @loan.save
             flash[:notice] = "Loan Granted"
@@ -66,6 +90,7 @@ class TransactionHistoriesController < ApplicationController
       @transaction.option = "request"
       @transaction.status = "pending"
       if @transaction.save
+        ActionCable.server.broadcast("transaction_channel",@transaction)
         flash[:notice] = "Request send Successfully"
         redirect_to root_path  
       else

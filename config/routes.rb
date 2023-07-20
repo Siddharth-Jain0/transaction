@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get 'wallet/index'
+  mount ActionCable.server => '/cable'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -27,4 +28,6 @@ Rails.application.routes.draw do
   post "loan/index",to:"loan#update",as:"update_loan"
   get "wallet/set_pin",to:"wallet#set_pin",as:"set_pin"
   post "wallet/set_pin",to:"wallet#update",as:"update_wallet"
+  get "loan/show/refiancnce",to:"loan#refianance",as:"refianance_loan"
+  post "loan/show/refianance",to:"loan#apply_refianance",as:"apply_refianance"
 end 
