@@ -1,10 +1,10 @@
 import consumer from "channels/consumer"
 import * as ActionCable from '@rails/actioncable'
 
-consumer.subscriptions.create("TransactionChannel", {
+consumer.subscriptions.create("LoanChannel", {
   connected() {
+    console.log("connected to loan  channel")
     // Called when the subscription is ready for use on the server
-    console.log("hello this is transaction controller")
   },
 
   disconnected() {
@@ -12,9 +12,10 @@ consumer.subscriptions.create("TransactionChannel", {
   },
 
   received(data) {
-    var dataArray = [{ value1: data[0].id, value2: data[1].name, value3: data[2].name , value4: data[1].upi , value5: data[2].upi , value6: data[0].amount , value7: data[0].option, value8: data[0].status}];
-    console.log('Received data in the channel:', dataArray);
+    // Called when there's incoming data on the websocket for this channel
     console.log('Received data in the channel:', data);
+    var dataArray = [{ value1: data.id, value2: data.principal, value3: parseFloat(data.monthly_rate).toFixed(4) , value4: data.time , value5: parseFloat(data.emi_amount).toFixed(2), value6: data.status,value7:"",value8:"" }];
+    console.log('Received data in the channel:', dataArray);
     $(document).ready(function() {
         $.each(dataArray, function(index, item) {
           var row = $('<tr>'); 
@@ -26,10 +27,8 @@ consumer.subscriptions.create("TransactionChannel", {
           row.append($('<td>').text(item.value6));
           row.append($('<td>').text(item.value7));
           row.append($('<td>').text(item.value8));
-          var selector = '#myTable' +data[1].id+ ' tbody';
-          $(selector).prepend(row);
-          var select = '#myTable' +data[2].id+ ' tbody';
-          $(select).append(row);
+          var selector = '#loantable tbody';
+          $(selector).append(row);
         });
     });
   }

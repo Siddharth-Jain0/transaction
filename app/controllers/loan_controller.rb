@@ -23,6 +23,7 @@ class LoanController < ApplicationController
       @loan.status = "pending"
       @loan.emi_amount =(@loan.principal*@loan.monthly_rate*((1 + @loan.monthly_rate)**@loan.time))/(((1+@loan.monthly_rate)**@loan.time)-1)
       if @loan.save
+        ActionCable.server.broadcast("loan_channel",@loan)
         flash[:notice] = "Applied for Loan"
         redirect_to show_loan_path
       else
