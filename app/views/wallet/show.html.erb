@@ -1,6 +1,6 @@
 <div class="intpol3" style="text-align: left; font-size: 17px; padding-top:10px; color: #003366">
 <p> wallet id : <%= @wallet.id %></p>
-<p> wallet balance : <%= @wallet.balance %></p>
+<p> wallet balance : <%= @wallet.balance.round(2) %></p>
 <%= link_to "Send Money", send_money_path %><br>
 <%= link_to "request money", request_money_path %><br>
 <%= link_to "show request", show_request_path %><br>
