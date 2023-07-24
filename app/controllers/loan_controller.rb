@@ -23,7 +23,15 @@ class LoanController < ApplicationController
       @loan.status = "pending"
       @loan.emi_amount =(@loan.principal*@loan.monthly_rate*((1 + @loan.monthly_rate)**@loan.time))/(((1+@loan.monthly_rate)**@loan.time)-1)
       if @loan.save
-        ActionCable.server.broadcast("loan_channel",@loan)
+        Turbo::StreamsChannel.broadcast_append_to(:notifications, target: "loantable", html: "<tbody> <tr>
+          <td><a href='/loan/#{@loan.id}/emi/index'>#{@loan.id}</a></td>
+          <td>#{@loan.principal}</td>
+          <td>#{@loan.monthly_rate.round(4)}</td>
+          <td>#{@loan.time.round(0)}</td>
+          <td>#{@loan.emi_amount.round(2)}</td>
+          <td>#{@loan.status} </td>
+          </tr></tbody> "
+          )
         flash[:notice] = "Applied for Loan"
         redirect_to show_loan_path
       else

@@ -1,3 +1,4 @@
+<%= turbo_stream_from(:notifications) %>
 <% if @loans.present? %>
   <table class="table table-striped" id ="loantable">
     <thead class="thead-dark">
@@ -18,7 +19,7 @@
       </tr>
     </thead>
     <tbody> 
-      <% @loans.each do |loan|%>
+      <% @loans.each do |loan|%></div>
         <tr>
         <td><%=link_to loan.id,emi_index_path(loan.id) %></td>
         <td><%= loan.principal %></td>
