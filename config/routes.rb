@@ -30,4 +30,9 @@ Rails.application.routes.draw do
   post "wallet/set_pin",to:"wallet#update",as:"update_wallet"
   get "loan/show/refiancnce",to:"loan#refianance",as:"refianance_loan"
   post "loan/show/refianance",to:"loan#apply_refianance",as:"apply_refianance"
+  get "chats",to:"chat#index",as:"chats"
+  get "chats/:id",to:"chat#show",as:"show_chats"
+  post "chats/:id/",to:"chat#create",as:"create_chats"
+  get "chat/new_chat",to:"chat#new_chat",as:"new_chat"
+  post "chat/new_chat",to: "chat#create_chat", as:"create_new_chat"
 end 

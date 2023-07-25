@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_one :wallet ,dependent: :destroy
   has_many :loan,dependent: :destroy
+  has_many :chat ,class_name:'User'
+
   validates :upi ,presence:true,:format => {:with => /\A(^[\w.-]+@[\w.-]+$)\Z/, message: "Enter proper upi id" }
   after_create do |user|
     user.create_wallet(balance: 0)

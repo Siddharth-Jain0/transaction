@@ -1,0 +1,9 @@
+<%= link_to "send message to another user", new_chat_path %>
+<ul>
+	<% @users.each do|user| %>
+		<li> 
+			<%= link_to "#{user.name}",show_chats_path(user.id) %>
+		</li>
+	<% end %>
+</ul>
+
