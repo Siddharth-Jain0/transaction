@@ -155,7 +155,9 @@ class TransactionHistoriesController < ApplicationController
   end
 
   private 
+
   def tra_params
     params.require(:transaction_history).permit(:amount)
   end
+  
 end

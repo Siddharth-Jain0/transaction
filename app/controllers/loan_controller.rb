@@ -1,4 +1,5 @@
 class LoanController < ApplicationController
+  
   def index
     @loans = Loan.all
   end
@@ -12,7 +13,7 @@ class LoanController < ApplicationController
   end
 
   def create
-      @loan = Loan.new(loan_params)
+    @loan = Loan.new(loan_params)
     if !params[:loan][:principal].present? || !params[:loan][:time].present?
       flash[:notice] = "Enter Valid Data"
       render :new,status: :unprocessable_entity
@@ -58,8 +59,8 @@ class LoanController < ApplicationController
   end
   
   def apply_refianance
-      @emi = Emi.find_by(loan_id: params[:loan][:previous_loan_id],Status: 0)
-      @loan = Loan.new(loan_params)
+    @emi = Emi.find_by(loan_id: params[:loan][:previous_loan_id],Status: 0)
+    @loan = Loan.new(loan_params)
     if !params[:loan][:principal].present? || !params[:loan][:time].present?
       flash[:notice] = "Enter Valid Data"
       render :refianance,status: :unprocessable_entity
@@ -83,8 +84,10 @@ class LoanController < ApplicationController
   end
 
   private
+  
   def loan_params
     params.require(:loan).permit(:principal,:time)
   end
+
 end
  

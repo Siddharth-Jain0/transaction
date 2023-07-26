@@ -1,14 +1,14 @@
 <%= form_with model: @chat, data: { controller: "hello" }, method: :post,url: create_new_chat_path do |form| %>
   <div class="form-outline mb-4" > 
-  <%= form.label :upi %><br>
-  <%= form.text_field :upi ,"data-hello-target": "upi"%><br>
-  <a data-action="click->hello#verify", name="verify", method= "get" font>Click to Verify</a>
+    <%= form.label :upi %><br>
+    <%= form.text_field :upi ,"data-hello-target": "upi"%><br>
+    <a data-action="click->hello#verify", name="verify", method= "get" font>Click to Verify</a>
   </div>
-  <div id="user_info" ></div>
+  <div id="user_info" > </div>
   <div class="form-outline mb-4">
-  <%= form.label :message %><br>
-  <%= form.text_field :message , id: "chat_message" %><br>
-  <%= form.hidden_field :sender_id ,value: current_user.id %>
-  <%= form.submit "send", id: "send", disabled:true %>
+    <%= form.label :message %><br>
+    <%= form.text_field :message , id: "chat_message" %><br>
+    <%= form.hidden_field :sender_id ,value: current_user.id %>
+    <%= form.submit "send", id: "send", disabled:true %>
   </div>
 <% end %>

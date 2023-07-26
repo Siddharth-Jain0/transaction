@@ -1,4 +1,5 @@
 class WalletController < ApplicationController
+  
   def index
   end
 
@@ -21,4 +22,5 @@ class WalletController < ApplicationController
       redirect_to set_pin_path
     end
   end
+
 end

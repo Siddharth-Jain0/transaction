@@ -16,21 +16,21 @@ consumer.subscriptions.create("TransactionChannel", {
     console.log('Received data in the channel:', dataArray);
     console.log('Received data in the channel:', data);
     $(document).ready(function() {
-        $.each(dataArray, function(index, item) {
-          var row = $('<tr>'); 
-          row.append($('<td>').text(item.value1));
-          row.append($('<td>').text(item.value2));
-          row.append($('<td>').text(item.value3));
-          row.append($('<td>').text(item.value4));
-          row.append($('<td>').text(item.value5));
-          row.append($('<td>').text(item.value6));
-          row.append($('<td>').text(item.value7));
-          row.append($('<td>').text(item.value8));
-          var selector = '#myTable' +data[1].id+ ' tbody';
-          $(selector).prepend(row);
-          var select = '#myTable' +data[2].id+ ' tbody';
-          $(select).append(row);
-        });
+      $.each(dataArray, function(index, item) {
+        var row = $('<tr>'); 
+        row.append($('<td>').text(item.value1));
+        row.append($('<td>').text(item.value2));
+        row.append($('<td>').text(item.value3));
+        row.append($('<td>').text(item.value4));
+        row.append($('<td>').text(item.value5));
+        row.append($('<td>').text(item.value6));
+        row.append($('<td>').text(item.value7));
+        row.append($('<td>').text(item.value8));
+        var selector = '#myTable' +data[1].id+ ' tbody';
+        $(selector).prepend(row);
+        var select = '#myTable' +data[2].id+ ' tbody';
+        $(select).append(row);
+      });
     });
   }
 });

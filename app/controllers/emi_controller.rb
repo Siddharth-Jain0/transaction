@@ -1,4 +1,5 @@
 class EmiController < ApplicationController
+  
   def index
     @emis = Emi.where(loan_id: params[:loan_id])
     @emis.each do |emi|
@@ -10,4 +11,5 @@ class EmiController < ApplicationController
       end
     end
   end
+
 end

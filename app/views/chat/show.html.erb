@@ -1,25 +1,25 @@
 <%= turbo_stream_from(:new_chat) %>
-<div id = "message">
-<% @chats.each do |chat| %>
-	<% if chat.sender_id == current_user.id %>
-    <div class="d-flex justify-content-end mb-2">
-      <div class="chat-message bg-primary text-white p-2 rounded-start">
-          <%= chat.message %>
-      </div>
-    </div>
-  <% else %>
-    <div class="d-flex justify-content-start mb-2">
-      <div class="chat-message bg-light p-2 rounded-end">
-          <%= chat.message %>
-      </div>
-    </div>
+  <div id = "message<%= current_user.id %><%= params[:id] %>">
+    <% @chats.each do |chat| %>
+    	<% if chat.sender_id == current_user.id %>
+        <div class="d-flex justify-content-end mb-2">
+          <div class="chat-message bg-primary text-white p-2 rounded-start">
+              <%= chat.message %>
+          </div>
+        </div>
+      <% else %>
+        <div class="d-flex justify-content-start mb-2">
+          <div class="chat-message bg-light p-2 rounded-end">
+              <%= chat.message %>
+          </div>
+        </div>
+      <% end %>
+    <%end%>
+  </div>
+  <%= form_with model: @chat, id: "chat" , method: :post,url: create_chats_path do |form| %>
+    <%= form.text_field :message , id: "chat_message" %>
+    <%= form.hidden_field :sender_id ,value: current_user.id %>
+    <%= form.hidden_field :reciever_id ,value: params[:id] %>
+    <%= form.submit "send" %>
   <% end %>
-<%end%>
-</div>
-<%= form_with model: @chat, id: "chat" , method: :post,url: create_chats_path do |form| %>
-  <%= form.text_field :message , id: "chat_message" %>
-  <%= form.hidden_field :sender_id ,value: current_user.id %>
-  <%= form.hidden_field :reciever_id ,value: params[:id] %>
-  <%= form.submit "send" %>
-<% end %>
 

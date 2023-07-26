@@ -17,19 +17,19 @@ consumer.subscriptions.create("LoanChannel", {
     var dataArray = [{ value1: data.id, value2: data.principal, value3: parseFloat(data.monthly_rate).toFixed(4) , value4: data.time , value5: parseFloat(data.emi_amount).toFixed(2), value6: data.status,value7:"",value8:"" }];
     console.log('Received data in the channel:', dataArray);
     $(document).ready(function() {
-        $.each(dataArray, function(index, item) {
-          var row = $('<tr>'); 
-          row.append($('<td>').text(item.value1));
-          row.append($('<td>').text(item.value2));
-          row.append($('<td>').text(item.value3));
-          row.append($('<td>').text(item.value4));
-          row.append($('<td>').text(item.value5));
-          row.append($('<td>').text(item.value6));
-          row.append($('<td>').text(item.value7));
-          row.append($('<td>').text(item.value8));
-          var selector = '#loantable tbody';
-          $(selector).append(row);
-        });
+      $.each(dataArray, function(index, item) {
+        var row = $('<tr>'); 
+        row.append($('<td>').text(item.value1));
+        row.append($('<td>').text(item.value2));
+        row.append($('<td>').text(item.value3));
+        row.append($('<td>').text(item.value4));
+        row.append($('<td>').text(item.value5));
+        row.append($('<td>').text(item.value6));
+        row.append($('<td>').text(item.value7));
+        row.append($('<td>').text(item.value8));
+        var selector = '#loantable tbody';
+        $(selector).append(row);
+      });
     });
   }
 });

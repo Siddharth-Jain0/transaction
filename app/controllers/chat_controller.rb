@@ -21,13 +21,18 @@ class ChatController < ApplicationController
 		@chat =Chat.new(chat_params)
 		if @chat.save
 			redirect_to create_chats_path
-			Turbo::StreamsChannel.broadcast_append_to(:new_chat, target: "message", html: "
-				<div class='d-flex justify-content-start mb-2'>
-      		<div class='chat-message bg-light p-2 rounded-end'>
-          	#{@chat.message}
-      		</div>
-    		</div>"
-          )
+			Turbo::StreamsChannel.broadcast_append_to(
+	      "new_chat",
+	      target: "message_user#{@chat.sender_id}_#{params[:id]}",
+	      partial: "chat/chat_message",
+	      locals: { chat: @chat }
+	    	)
+    	Turbo::StreamsChannel.broadcast_append_to(
+	      "new_chat",
+	      target: "message#{params[:id]}#{@chat.sender_id}",
+	      partial: "chat/reciever_chat",
+	      locals: { chat: @chat }
+	    	)
 		end
 	end
 
@@ -38,7 +43,6 @@ class ChatController < ApplicationController
 	def create_chat
 		@user = User.find_by(upi: params[:chat][:upi])
 		@chat = Chat.new(sender_id:params[:chat][:sender_id].to_i,reciever_id: @user.id,message: params[:chat][:message]).save
-		binding.pry
 		redirect_to chats_path
 	end
 
